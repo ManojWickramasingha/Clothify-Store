@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserLoginFormController">
+   <children>
+      <TextField fx:id="txtUserName" layoutX="187.0" layoutY="179.0" prefHeight="25.0" prefWidth="224.0" promptText="user name" AnchorPane.leftAnchor="187.0" AnchorPane.rightAnchor="189.0" />
+      <TextField fx:id="txtPassword" layoutX="187.0" layoutY="217.0" prefHeight="25.0" prefWidth="224.0" promptText="password" AnchorPane.leftAnchor="187.0" AnchorPane.rightAnchor="189.0" />
+      <JFXButton layoutX="262.0" layoutY="266.0" onAction="#btnLoginOnAction" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #27ae60;" text="Login" textFill="#fcfcfc" AnchorPane.leftAnchor="262.0" AnchorPane.rightAnchor="261.0" />
+      <JFXButton layoutX="262.0" layoutY="355.0" onAction="#btnRegisterFormOnAction" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #34495e;" text="Register" textFill="WHITE" AnchorPane.leftAnchor="262.0" AnchorPane.rightAnchor="261.0" />
+      <Label layoutX="193.0" layoutY="317.0" prefHeight="17.0" prefWidth="249.0" text="Your don't have account? create account" textFill="#1221c6" AnchorPane.leftAnchor="193.0" AnchorPane.rightAnchor="158.0" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="216.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../img/Admin.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

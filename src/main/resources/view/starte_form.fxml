@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: #2c3e50;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StartFormController">
+   <children>
+      <ImageView fitHeight="403.0" fitWidth="612.0" opacity="0.55" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../img/store.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="167.0" layoutY="25.0" prefHeight="43.0" prefWidth="266.0" text="Clothing Store" textAlignment="CENTER" textFill="#2c3e50" AnchorPane.leftAnchor="167.0" AnchorPane.rightAnchor="179.0" AnchorPane.topAnchor="25.0">
+         <font>
+            <Font name="Abril Fatface" size="39.0" />
+         </font>
+      </Label>
+      <JFXButton buttonType="RAISED" layoutX="260.0" layoutY="209.0" onAction="#btnGetStartOnAction" prefHeight="34.0" prefWidth="92.0" style="-fx-background-color: #2c3e50;" text="Get Starte" textFill="WHITE" AnchorPane.leftAnchor="260.0" AnchorPane.rightAnchor="260.0" />
+      <Label layoutX="180.0" layoutY="126.0" prefHeight="30.0" prefWidth="275.0" text="The  Management software " textFill="#650a0a" AnchorPane.leftAnchor="167.0" AnchorPane.rightAnchor="179.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
