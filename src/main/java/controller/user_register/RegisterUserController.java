@@ -1,15 +1,16 @@
 package controller.user_register;
 
-import db.DbConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import util.CrudUtil;
+
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterUserController implements RegisterUserService{
-    public static RegisterUserController instance;
+
+    private CrudUtil util = CrudUtil.getInstance();
+    private static RegisterUserController instance;
 
     private RegisterUserController(){}
 
@@ -24,25 +25,14 @@ public class RegisterUserController implements RegisterUserService{
 
             if(password.equals(cPassword) && isValidPassword(password)){
                 if(isValideEmail(email)){
-                    try {
+                    String SQL = "INSERT INTO register values(?,?,?,?)";
 
-                        Connection connection = DbConnection.getInstance().getConnection();
-                        PreparedStatement psTm = connection.prepareStatement("INSERT INTO register values(?,?,?,?)");
-                        psTm.setObject(1,email);
-                        psTm.setObject(2,password);
-                        psTm.setObject(3,null);
-                        psTm.setObject(4,name);
 
-                        boolean isAdded = psTm.executeUpdate()>0;
+                    Boolean isAdded =   util.execute(SQL,email,password,null,name);
 
-                        if(isAdded){
-                            return true;
-                        }
-
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                    if(isAdded){
+                        return true;
                     }
-
 
 
                 } else{

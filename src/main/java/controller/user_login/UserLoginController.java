@@ -2,6 +2,7 @@ package controller.user_login;
 
 import db.DbConnection;
 import model.Register;
+import util.CrudUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class UserLoginController implements UserLoginService{
-    public static UserLoginController instance;
+    private static UserLoginController instance;
+
+    private CrudUtil util = CrudUtil.getInstance();
     private UserLoginController(){}
 
     public static UserLoginController getInstance(){
@@ -21,9 +24,8 @@ public class UserLoginController implements UserLoginService{
         ArrayList<Register> registerArrayList = new ArrayList<>();
 
         try {
-            Connection connection =  DbConnection.getInstance().getConnection();
-            PreparedStatement psTm = connection.prepareStatement("SELECT * FROM register");
-            ResultSet resultSet = psTm.executeQuery();
+            String SQL = "SELECT * FROM register";
+            ResultSet resultSet = util.execute(SQL);
 
             while (resultSet.next()){
                 registerArrayList.add(

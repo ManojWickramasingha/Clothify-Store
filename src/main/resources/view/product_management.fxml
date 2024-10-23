@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="479.0" prefWidth="711.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.product_management.ProductManagementFormController">
+   <children>
+      <Pane prefHeight="76.0" prefWidth="711.0" style="-fx-background-color: #2c3e50;">
+         <children>
+            <Label layoutX="150.0" layoutY="12.0" prefHeight="53.0" prefWidth="482.0" text="PRODUCT MANAGEMENT " textFill="WHITE">
+               <font>
+                  <Font name="Abril Fatface" size="38.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="93.0" fitWidth="100.0" layoutX="35.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/Registration.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutX="14.0" layoutY="85.0" prefHeight="321.0" prefWidth="265.0" style="-fx-background-color: #ecf0f1;">
+         <children>
+            <TextField fx:id="txtProductId" layoutX="8.0" layoutY="106.0" prefHeight="25.0" prefWidth="229.0" promptText="Product ID" />
+            <TextField fx:id="txtProductName" layoutX="8.0" layoutY="145.0" prefHeight="25.0" prefWidth="229.0" promptText="Product Name" />
+            <TextField fx:id="txtSize" layoutX="8.0" layoutY="190.0" prefHeight="25.0" prefWidth="229.0" promptText="Size" />
+            <TextField fx:id="txtPrice" layoutX="8.0" layoutY="234.0" prefHeight="25.0" prefWidth="229.0" promptText="Price" />
+            <TextField fx:id="txtQuantity" layoutX="8.0" layoutY="282.0" prefHeight="25.0" prefWidth="229.0" promptText="Quantity" />
+            <ComboBox fx:id="cmdCategory" layoutX="20.0" layoutY="55.0" prefHeight="25.0" prefWidth="191.0" promptText="category" />
+            <ComboBox fx:id="cmdSupplerId" layoutX="20.0" layoutY="14.0" prefHeight="25.0" prefWidth="191.0" promptText="suppler Id" />
+         </children>
+      </Pane>
+      <JFXButton layoutX="147.0" layoutY="425.0" onAction="#btnNextOnAction" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #27ae60;" text="Next" textFill="WHITE" />
+      <Pane layoutX="409.0" layoutY="85.0" prefHeight="340.0" prefWidth="265.0" style="-fx-background-color: #ecf0f1;">
+         <children>
+            <TextField fx:id="txtProductId1" layoutX="18.0" layoutY="53.0" prefHeight="25.0" prefWidth="229.0" promptText="Product ID" />
+            <TextField fx:id="txtProductName1" layoutX="18.0" layoutY="92.0" prefHeight="25.0" prefWidth="229.0" promptText="Product Name" />
+            <TextField fx:id="txtCategory1" layoutX="18.0" layoutY="131.0" prefHeight="25.0" prefWidth="229.0" promptText="Category" />
+            <TextField fx:id="txtSize1" layoutX="18.0" layoutY="171.0" prefHeight="25.0" prefWidth="229.0" promptText="Size" />
+            <TextField fx:id="txtPrice1" layoutX="18.0" layoutY="215.0" prefHeight="25.0" prefWidth="229.0" promptText="Price" />
+            <TextField fx:id="txtQuantity1" layoutX="18.0" layoutY="258.0" prefHeight="25.0" prefWidth="229.0" promptText="Quantity" />
+            <TextField fx:id="txtSupplerId1" layoutX="18.0" layoutY="301.0" prefHeight="25.0" prefWidth="229.0" promptText="Suppler ID" />
+            <TextField fx:id="txtSearch" layoutX="18.0" layoutY="14.0" prefHeight="25.0" prefWidth="156.0" promptText="search ID" />
+            <JFXButton layoutX="185.0" layoutY="14.0" onAction="#btnSearchOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #1abc9c;" text="Search" textFill="WHITE" />
+         </children>
+      </Pane>
+      <JFXButton layoutX="409.0" layoutY="443.0" onAction="#btnDeleteOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #e74c3c;" text="Delete" textFill="WHITE" />
+      <JFXButton layoutX="507.0" layoutY="443.0" onAction="#btnUpdateOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #3498db;" text="Update" textFill="WHITE" />
+      <JFXButton layoutX="604.0" layoutY="443.0" onAction="#btnCancelOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #34495e;" text="Cancel" textFill="WHITE" />
+      <JFXButton layoutX="35.0" layoutY="425.0" onAction="#btnAddOnAction" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #27ae60;" text="Add" textFill="#f8f8f8" />
+   </children>
+</AnchorPane>
