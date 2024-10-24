@@ -6,7 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import model.User;
+import dto.User;
+import service.ServiceFactory;
+import service.custom.RegisterService;
+import util.ServiceType;
 
 import java.util.ArrayList;
 
@@ -31,12 +34,13 @@ public class RegisterUserFormController {
    private ArrayList<User> users = new ArrayList<>();
 
    private RegisterUserService service = RegisterUserController.getInstance();
+   final RegisterService regService = ServiceFactory.getInstance().getServiceType(ServiceType.REGISTER);
 
     @FXML
     void btnRegisterOnAction(ActionEvent event) {
 
 
-       boolean isAdd = service.userReister(
+       boolean isAdd = regService.userReister(
                 txtPassword.getText(),
                 txtConfirmPassword.getText(),
                 txtEmail.getText(),

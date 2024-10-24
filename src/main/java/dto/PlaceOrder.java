@@ -1,17 +1,15 @@
-package model;
+package dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cart {
-    private String productId;
-    private String size;
-    private Integer qty;
-    private Double total;
+public class PlaceOrder {
+    private String orderId;
+    private String invoice;
 }

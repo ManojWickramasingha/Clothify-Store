@@ -1,11 +1,8 @@
 package controller.user_login;
 
-import db.DbConnection;
-import model.Register;
+import dto.Register;
 import util.CrudUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

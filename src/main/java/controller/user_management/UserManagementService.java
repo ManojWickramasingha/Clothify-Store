@@ -1,7 +1,7 @@
 package controller.user_management;
 
 import javafx.collections.ObservableList;
-import model.Register;
+import dto.Register;
 
 public interface UserManagementService {
     public ObservableList<Register> getAllRegister();

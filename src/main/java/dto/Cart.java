@@ -1,4 +1,4 @@
-package model;
+package dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemRange {
-    private String itemId;
-    private String rangeName;
-
+public class Cart {
+    private String productId;
+    private String size;
+    private Integer qty;
+    private Double total;
 }

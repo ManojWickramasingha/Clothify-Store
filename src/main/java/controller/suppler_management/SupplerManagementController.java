@@ -2,7 +2,7 @@ package controller.suppler_management;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Suppler;
+import dto.Suppler;
 import util.CrudUtil;
 
 import java.sql.ResultSet;

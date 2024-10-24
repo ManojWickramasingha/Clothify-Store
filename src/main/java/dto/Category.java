@@ -1,4 +1,4 @@
-package model;
+package dto;
 
 import lombok.*;
 
@@ -7,8 +7,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Category {
+    private int id;
     private String name;
-    private String email;
-    private String password;
 }

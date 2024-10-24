@@ -2,7 +2,7 @@ package controller.employee_management;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Employee;
+import dto.Employee;
 import util.CrudUtil;
 
 import java.sql.ResultSet;

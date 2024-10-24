@@ -1,18 +1,15 @@
-package model;
+package entity;
 
 import lombok.*;
 
-import java.time.LocalDate;
-
 @Setter
 @Getter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Suppler {
+@ToString
+public class EmployeeEntity {
     private String id;
     private String name;
     private String company;
     private String email;
-    private LocalDate createDate;
 }

@@ -9,7 +9,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Employee;
+import dto.Employee;
+import service.ServiceFactory;
+import service.custom.EmployeeService;
+import util.ServiceType;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -49,11 +52,12 @@ public class EmployeeManagementFormController implements Initializable {
     @FXML
     private TextField txtSearch;
 
-    private EmployeeManagementService service = EmployeeManagementController.getInstance();
+    EmployeeService emService = ServiceFactory.getInstance().getServiceType(ServiceType.EMPLOYEE);
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
-     Boolean isAdd =   service.addEmployee(
+
+        Boolean isAdd =   emService.addEmployee(
                 new Employee(
                         txtEmployeeId.getText(),
                         txtName.getText(),
@@ -64,6 +68,8 @@ public class EmployeeManagementFormController implements Initializable {
 
      if(isAdd){
          new Alert(Alert.AlertType.INFORMATION,"Employee Added successful").show();
+         tblEmployee.setItems(emService.loadTable());
+         clear();
      }else{
          new Alert(Alert.AlertType.ERROR,"Employee Not Add").show();
      }
@@ -71,10 +77,10 @@ public class EmployeeManagementFormController implements Initializable {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-       Boolean isDelete = service.deleteEmployee(txtEmployeeId.getText());
+       Boolean isDelete = emService.deleteEmployee(txtEmployeeId.getText());
        if(isDelete){
            new Alert(Alert.AlertType.INFORMATION,"Employee delete successful").show();
-           tblEmployee.setItems(service.loadTable());
+           tblEmployee.setItems(emService.loadTable());
            clear();
        }else {
            new Alert(Alert.AlertType.ERROR,"Employee Delete Fail").show();
@@ -90,7 +96,7 @@ public class EmployeeManagementFormController implements Initializable {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-      Boolean isUpdate =  service.updateEmployee(
+      Boolean isUpdate =  emService.updateEmployee(
                 new Employee(
                         txtEmployeeId.getText(),
                         txtName.getText(),
@@ -100,7 +106,7 @@ public class EmployeeManagementFormController implements Initializable {
         );
       if(isUpdate){
           new Alert(Alert.AlertType.CONFIRMATION,"Employee Update Successful").show();
-          tblEmployee.setItems(service.loadTable());
+          tblEmployee.setItems(emService.loadTable());
           clear();
       }else{
           new Alert(Alert.AlertType.ERROR,"Employee Not Update").show();
@@ -115,14 +121,14 @@ public class EmployeeManagementFormController implements Initializable {
         colCompany.setCellValueFactory(new PropertyValueFactory<>("company"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        String id = service.genarateIdEm();
+        String id = emService.genarateIdEm();
         if(id != null){
             txtEmployeeId.setText(id);
         }else{
             txtEmployeeId.setText("E001");
         }
 
-        tblEmployee.setItems(service.loadTable());
+        tblEmployee.setItems(emService.loadTable());
 
         tblEmployee.getSelectionModel().selectedItemProperty().addListener((observableValue, oldVal, newVal) -> {
             if(newVal != null){

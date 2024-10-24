@@ -9,7 +9,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Register;
+import dto.Register;
+import service.ServiceFactory;
+import service.custom.UserService;
+import util.ServiceType;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,7 +37,9 @@ public class UserManagementFormController implements Initializable {
     @FXML
     private TextField txtEmail;
 
-    private UserManagementService service = UserManagementController.getInstance();
+
+
+    final UserService uService = ServiceFactory.getInstance().getServiceType(ServiceType.USER);
 
     @FXML
     void btnReloadOnAction(ActionEvent event) {
@@ -44,7 +49,7 @@ public class UserManagementFormController implements Initializable {
     }
 
     private void LoadTable(){
-        ObservableList<Register> allRegister = service.getAllRegister();
+        ObservableList<Register> allRegister = uService.getAllRegister();
         if(allRegister!=null){
             tblRegister.setItems(allRegister);
         }else{
@@ -56,7 +61,7 @@ public class UserManagementFormController implements Initializable {
 
     @FXML
     void btnRegisteredOnAction(ActionEvent event) {
-        boolean isRegistered = service.confirmRegister(txtEmail.getText(), txtUserRole.getText());
+        boolean isRegistered = uService.confirmRegister(txtEmail.getText(), txtUserRole.getText());
         if(isRegistered){
             new Alert(Alert.AlertType.CONFIRMATION,"Register User Successful").show();
         }else{
@@ -69,7 +74,7 @@ public class UserManagementFormController implements Initializable {
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
 
-        boolean isDeleted = service.deleteUser(txtEmail.getText());
+        boolean isDeleted = uService.deleteUser(txtEmail.getText());
         if(isDeleted){
             new Alert(Alert.AlertType.INFORMATION,"Delete user successful").show();
         }

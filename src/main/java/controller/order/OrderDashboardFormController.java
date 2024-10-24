@@ -13,7 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
-import model.*;
+import dto.*;
 
 import java.net.URL;
 

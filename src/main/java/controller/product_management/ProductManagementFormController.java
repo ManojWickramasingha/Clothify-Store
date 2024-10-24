@@ -11,12 +11,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Category;
-import model.Product;
-import model.Suppler;
+import dto.Product;
+import service.ServiceFactory;
+import service.custom.ProductService;
+import util.ServiceType;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ProductManagementFormController implements Initializable {
@@ -27,8 +29,7 @@ public class ProductManagementFormController implements Initializable {
     @FXML
     private ComboBox<Integer> cmdCategory;
 
-    @FXML
-    private TextField txtCategory;
+
 
     @FXML
     private TextField txtCategory1;
@@ -66,22 +67,21 @@ public class ProductManagementFormController implements Initializable {
     @FXML
     private TextField txtSize1;
 
-    @FXML
-    private TextField txtSupplerId;
+
 
     @FXML
     private TextField txtSupplerId1;
 
     private Stage stageRange=null;
 
-    private ProductManagementService service = ProductManagementController.getInstance();
+    final ProductService pService = ServiceFactory.getInstance().getServiceType(ServiceType.PRODUCT);
 
     @FXML
-    void btnNextOnAction(ActionEvent event) {
+    void btnNextOnAction() {
         if (stageRange==null){
             stageRange = new Stage();
             try {
-                stageRange.setScene(new Scene(FXMLLoader.load(getClass().getResource("../../view/product_range.fxml"))));
+                stageRange.setScene(new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../../view/product_range.fxml")))));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -97,11 +97,11 @@ public class ProductManagementFormController implements Initializable {
     }
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
-        boolean isDelete = service.deleteProduct(txtProductId1.getText());
+    void btnDeleteOnAction() {
+        boolean isDelete = pService.deleteProduct(txtProductId1.getText());
         if(isDelete){
             new Alert(Alert.AlertType.CONFIRMATION,"Product delete successful").show();
-            clearTextTo();
+            clearTextTo1();
         }else{
             new Alert(Alert.AlertType.ERROR,"Product delete fail");
         }
@@ -109,7 +109,7 @@ public class ProductManagementFormController implements Initializable {
 
 
     }
-    private void clearTextTo(){
+    private void clearTextTo1(){
         txtProductId1.clear();
         txtProductName1.clear();
         txtCategory1.clear();
@@ -119,10 +119,20 @@ public class ProductManagementFormController implements Initializable {
         txtSupplerId1.clear();
     }
 
-    @FXML
-    void btnSearchOnAction(ActionEvent event) {
+    private void clearTextTo(){
+        txtProductId.clear();
+        txtProductName.clear();
+        txtSize.clear();
+        txtPrice.clear();
+        txtQuantity.clear();
+        cmdSupplerId.setPromptText("Suppler id");
+        cmdCategory.setPromptText("Category");
+    }
 
-        Product product = service.searchproduct(txtSearch.getText());
+    @FXML
+    void btnSearchOnAction() {
+
+        Product product = pService.searchproduct(txtSearch.getText());
         setTextTo(product);
 
     }
@@ -138,8 +148,8 @@ public class ProductManagementFormController implements Initializable {
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
-      boolean isUpdate =  service.updateProduct(
+    void btnUpdateOnAction() {
+      boolean isUpdate =  pService.updateProduct(
                 new Product(
                         txtProductId1.getText(),
                         txtProductName1.getText(),
@@ -152,33 +162,23 @@ public class ProductManagementFormController implements Initializable {
         );
       if(isUpdate){
           new Alert(Alert.AlertType.CONFIRMATION,"product update successful").show();
+          clearTextTo1();
       }else{
           new Alert(Alert.AlertType.ERROR,"product update fail").show();
+          clearTextTo1();
       }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<String> ids = FXCollections.observableArrayList();
-        ObservableList<Suppler> allSuppler = service.getAllSuppler();
-        allSuppler.forEach(obj -> {
-            ids.add(obj.getId());
-        });
-        cmdSupplerId.setItems(ids);
-
-       ObservableList<Integer> Categories = FXCollections.observableArrayList();
-        ObservableList<Category> allCategory = service.getAllCategory();
-
-        allCategory.forEach(obj ->{
-            Categories.add(obj.getId());
-        });
-
-        cmdCategory.setItems(Categories);
+        cmdSupplerId.setItems(pService.getAllSupplerId());
+        ObservableList<Integer> allCategoryId = pService.getAllCategoryId();
+        cmdCategory.setItems(allCategoryId);
 
     }
     @FXML
-    void btnAddOnAction(ActionEvent event) {
-      Boolean isAdd = service.addProduct(
+    void btnAddOnAction() {
+       boolean isAdd = pService.addProduct(
                 new Product(
                         txtProductId.getText(),
                         txtProductName.getText(),

@@ -1,10 +1,10 @@
 package service.custom;
 
 import javafx.collections.ObservableList;
-import model.Employee;
+import dto.Employee;
 import service.SuperService;
 
-public interface EmployeeService extends SuperService {
+public interface EmployeeService extends SuperService  {
     String genarateIdEm();
 
     Boolean addEmployee(Employee employee);

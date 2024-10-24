@@ -2,10 +2,10 @@ package controller.product_management;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Category;
-import model.OrderDetail;
-import model.Product;
-import model.Suppler;
+import dto.Category;
+import dto.OrderDetail;
+import dto.Product;
+import dto.Suppler;
 import util.CrudUtil;
 
 import java.sql.ResultSet;

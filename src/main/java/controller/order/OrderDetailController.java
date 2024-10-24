@@ -1,7 +1,7 @@
 package controller.order;
 
 import javafx.collections.ObservableList;
-import model.OrderDetail;
+import dto.OrderDetail;
 import util.CrudUtil;
 
 public class OrderDetailController {

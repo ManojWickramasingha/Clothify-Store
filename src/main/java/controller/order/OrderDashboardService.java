@@ -1,13 +1,12 @@
 package controller.order;
 
 import javafx.collections.ObservableList;
-import model.Cart;
-import model.Order;
-import model.Product;
+import dto.Cart;
+import dto.Order;
+import dto.Product;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public interface OrderDashboardService {
     String genarateId();

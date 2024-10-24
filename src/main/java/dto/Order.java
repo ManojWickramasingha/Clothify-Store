@@ -1,4 +1,4 @@
-package model;
+package dto;
 
 import javafx.collections.ObservableList;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 @Setter
 @Getter

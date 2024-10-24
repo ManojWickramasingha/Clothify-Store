@@ -1,4 +1,4 @@
-package model;
+package entity;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Register {
+public class LoginEntity {
     private String email;
     private String password;
     private String role;

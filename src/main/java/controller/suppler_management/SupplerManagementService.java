@@ -1,7 +1,7 @@
 package controller.suppler_management;
 
 import javafx.collections.ObservableList;
-import model.Suppler;
+import dto.Suppler;
 
 public interface SupplerManagementService {
     Boolean addSuppler(Suppler suppler);

@@ -9,7 +9,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Suppler;
+import dto.Suppler;
+import service.ServiceFactory;
+import service.custom.SupplerService;
+import util.ServiceType;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -53,11 +56,12 @@ public class SupplerManagementFormController implements Initializable {
     @FXML
     private JFXTextField txtSupplerId;
 
-    private SupplerManagementController service = SupplerManagementController.getInstance();
+    final SupplerManagementController service = SupplerManagementController.getInstance();
+    final SupplerService supService = ServiceFactory.getInstance().getServiceType(ServiceType.SUPPLER);
 
     @FXML
-    void btnAddOnAction(ActionEvent event) {
-      Boolean isAdd =  service.addSuppler(
+    void btnAddOnAction() {
+      Boolean isAdd =  supService.addSuppler(
                 new Suppler(
                         txtSupplerId.getText(),
                         txtName.getText(),
@@ -67,7 +71,7 @@ public class SupplerManagementFormController implements Initializable {
                 )
         );
 
-      if(isAdd){
+      if(Boolean.TRUE.equals(isAdd)){
           new Alert(Alert.AlertType.INFORMATION,"Suppler Added is successful").show();
       }else{
           new Alert(Alert.AlertType.ERROR,"Suppler Added Fail");
@@ -76,25 +80,25 @@ public class SupplerManagementFormController implements Initializable {
     }
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
-       Boolean isDelete = service.deleteSuppler(txtSupplerId.getText());
+    void btnDeleteOnAction() {
+       boolean isDelete = supService.deleteSuppler(txtSupplerId.getText());
        if(isDelete){
            new Alert(Alert.AlertType.INFORMATION,"Dlete SucessFul").show();
-           Clear();
+           clear();
        }else{
            new Alert(Alert.AlertType.ERROR,"Delete Not Successful").show();
-           Clear();
+           clear();
        }
     }
 
     @FXML
     void btnSearchOnAction(ActionEvent event) {
-
+        // TODO document why this method is empty
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
-      Boolean isUpdate =  service.updateSuppler(
+    void btnUpdateOnAction() {
+      Boolean isUpdate =  supService.updateSuppler(
                 new Suppler(
                         txtSupplerId.getText(),
                         txtName.getText(),
@@ -103,13 +107,13 @@ public class SupplerManagementFormController implements Initializable {
                        LocalDate.parse(txtDate.getText())
                 )
         );
-      if(isUpdate){
+      if(Boolean.TRUE.equals(isUpdate)){
           new Alert(Alert.AlertType.INFORMATION,"Suppler update success").show();
           tblSuppler.setItems( service.loadTable());
-          Clear();
+          clear();
       }else{
           new Alert(Alert.AlertType.ERROR,"Suppler update fail").show();
-          Clear();
+          clear();
       }
     }
 
@@ -126,12 +130,12 @@ public class SupplerManagementFormController implements Initializable {
 
         tblSuppler.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newVal) ->{
             if(newVal != null){
-                AddTextTo(newVal);
+                addTextTo(newVal);
             }
         } );
     }
 
-    private void AddTextTo(Suppler newVal) {
+    private void addTextTo(Suppler newVal) {
         txtName.setText(newVal.getName());
         txtCompany.setText(newVal.getCompany());
         txtEmail.setText(newVal.getEmail());
@@ -139,7 +143,7 @@ public class SupplerManagementFormController implements Initializable {
         txtSupplerId.setText(newVal.getId());
     }
 
-    private void Clear(){
+    private void clear(){
         txtSupplerId.clear();
         txtCompany.clear();
         txtEmail.clear();

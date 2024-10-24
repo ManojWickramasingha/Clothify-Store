@@ -1,13 +1,13 @@
-package model;
+package entity;
 
 import lombok.*;
 
-@Setter
 @Getter
-@ToString
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductRange {
+@ToString
+public class ProductRangeEntity {
     private String id;
     private String type;
     private String size;

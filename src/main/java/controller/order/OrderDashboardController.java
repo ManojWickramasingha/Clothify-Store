@@ -2,21 +2,16 @@ package controller.order;
 
 import controller.product_management.ProductManagementController;
 import db.DbConnection;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import model.Cart;
-import model.Order;
-import model.OrderDetail;
-import model.Product;
+import dto.Cart;
+import dto.Order;
+import dto.Product;
 import util.CrudUtil;
 
 import java.sql.*;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class OrderDashboardController implements OrderDashboardService{
 

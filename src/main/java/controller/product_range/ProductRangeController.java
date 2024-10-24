@@ -2,7 +2,7 @@ package controller.product_range;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.ProductRange;
+import dto.ProductRange;
 import util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -46,7 +46,7 @@ public class ProductRangeController implements ProductRangeService{
     }
 
     @Override
-    public Boolean addRange(ProductRange productRange) {
+    public Boolean addProductRange(ProductRange productRange) {
         String SQL = "INSERT INTO category_range values(?,?,?,?,?)";
        Boolean isAdd = util.execute(SQL,
                 productRange.getId(),

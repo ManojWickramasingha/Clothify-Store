@@ -1,15 +1,16 @@
-package model;
+package dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlaceOrder {
-    private String orderId;
-    private String invoice;
+public class ItemRange {
+    private String itemId;
+    private String rangeName;
+
 }

@@ -10,7 +10,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.ProductRange;
+import dto.ProductRange;
+import service.ServiceFactory;
+
+import util.ServiceType;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -49,7 +52,9 @@ public class ProductRangeFormController implements Initializable {
     @FXML
     private TableColumn<?, ?> colId;
 
-    private ProductRangeController service = ProductRangeController.getInstance();
+
+
+    final ProductRangeService rService = ServiceFactory.getInstance().getServiceType(ServiceType.RANGE);
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
@@ -57,8 +62,8 @@ public class ProductRangeFormController implements Initializable {
     }
 
     @FXML
-    void btnAddTableOnAction(ActionEvent event) {
-      Boolean isAdd =  service.addRange(
+    void btnAddTableOnAction() {
+      Boolean isAdd =  rService.addProductRange(
                 new ProductRange(
                       txtId.getText(),
                       txtType.getText(),
@@ -67,7 +72,7 @@ public class ProductRangeFormController implements Initializable {
                      Integer.parseInt(txtCategoryId.getText())
                 )
         );
-      if(isAdd){
+      if(Boolean.TRUE.equals(isAdd)){
           new Alert(Alert.AlertType.INFORMATION,"productRange add successful").show();
       }else{
           new Alert(Alert.AlertType.ERROR,"ProductRange not add").show();
@@ -75,19 +80,19 @@ public class ProductRangeFormController implements Initializable {
     }
 
     @FXML
-    void btnDeleteOnAction(ActionEvent event) {
-        Boolean isDelete = service.deleteRange(txtId.getText());
-        if(isDelete){
+    void btnDeleteOnAction() {
+        Boolean isDelete = rService.deleteRange(txtId.getText());
+        if(Boolean.TRUE.equals(isDelete)){
             new Alert(Alert.AlertType.CONFIRMATION,"Product Range Delete Successful").show();
-            tblProductRange.setItems(service.loadTable());
+            tblProductRange.setItems(rService.loadTable());
         }else {
             new Alert(Alert.AlertType.ERROR,"Product Range Delete Fail").show();
         }
     }
 
     @FXML
-    void btnUpdateOnAction(ActionEvent event) {
-     Boolean isUpdate =   service.updateRange(
+    void btnUpdateOnAction() {
+     Boolean isUpdate =   rService.updateRange(
                 new ProductRange(
                         txtId.getText(),
                         txtType.getText(),
@@ -96,9 +101,9 @@ public class ProductRangeFormController implements Initializable {
                         Integer.parseInt(txtCategoryId.getText())
                 )
         );
-     if(isUpdate){
+     if(Boolean.TRUE.equals(isUpdate)){
          new Alert(Alert.AlertType.CONFIRMATION,"Product Range Update Successful").show();
-         tblProductRange.setItems(service.loadTable());
+         tblProductRange.setItems(rService.loadTable());
      }else{
          new Alert(Alert.AlertType.ERROR,"Product Range Update fail").show();
      }
@@ -112,21 +117,21 @@ public class ProductRangeFormController implements Initializable {
         colStyle.setCellValueFactory(new PropertyValueFactory<>("style"));
         colCategoryId.setCellValueFactory(new PropertyValueFactory<>("categoryId"));
 
-        ObservableList<ProductRange> productRanges = service.loadTable();
+        ObservableList<ProductRange> productRanges = rService.loadTable();
         if(productRanges!=null){
                 tblProductRange.setItems(productRanges);
         }
 
-        txtId.setText(service.genarateId());
+        txtId.setText(rService.genarateId());
 
         tblProductRange.getSelectionModel().selectedItemProperty().addListener((observableValue, oldVal, newVal) -> {
             if(newVal!=null){
-                TextToComplte(newVal);
+                textToComplete(newVal);
             }
         });
     }
 
-    private void TextToComplte(ProductRange newVal) {
+    private void textToComplete(ProductRange newVal) {
         txtId.setText(newVal.getId());
         txtCategoryId.setText(""+newVal.getCategoryId());
         txtType.setText(newVal.getType());

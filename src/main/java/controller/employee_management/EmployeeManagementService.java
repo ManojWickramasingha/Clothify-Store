@@ -1,7 +1,7 @@
 package controller.employee_management;
 
 import javafx.collections.ObservableList;
-import model.Employee;
+import dto.Employee;
 
 public interface EmployeeManagementService {
 
