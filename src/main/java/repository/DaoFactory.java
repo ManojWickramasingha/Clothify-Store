@@ -19,6 +19,9 @@ public class DaoFactory {
             case LOGIN:return (T) new LoginDaoImpl();
             case USER:return (T) new UserDaoImpl();
             case REGISTER:return (T) new RegisterDaoImpl();
+            case ORDER:return (T) new OrderDaoImpl();
+            case ORDERDETAILS: return (T) new OrderDetailDaoImpl();
+            case SUPPLER:return (T) new SupplerDaoImpl();
         }
         return null;
     }

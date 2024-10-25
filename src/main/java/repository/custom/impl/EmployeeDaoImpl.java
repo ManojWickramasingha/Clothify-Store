@@ -1,91 +1,138 @@
 package repository.custom.impl;
 
-import dto.Employee;
+
 import entity.EmployeeEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import repository.custom.EmployeeDao;
 import util.CrudUtil;
+import util.HibernateUtil;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.util.List;
 
 public class EmployeeDaoImpl implements EmployeeDao {
 
-    private CrudUtil util = CrudUtil.getInstance();
+    private final CrudUtil util = CrudUtil.getInstance();
     @Override
     public Boolean save(EmployeeEntity employee) {
-         System.out.println(employee);
-        String SQL = "Insert into employee values(?,?,?,?)";
-        Boolean isAdd =  util.execute(SQL,
-                employee.getId(),
-                employee.getName(),
-                employee.getCompany(),
-                employee.getEmail());
-        if(isAdd){
-            return true;
-        }
-        return false;
+
+        Session session = HibernateUtil.getSession();
+        session.getTransaction().begin();
+        session.persist(employee);
+        session.getTransaction().commit();
+        session.close();
+
+        return true;
+
+
 
     }
 
     @Override
     public Boolean update(EmployeeEntity employee) {
-        String SQL = "UPDATE employee SET name=?,company=?,email=? WHERE id=?";
-        Boolean isUpdate = util.execute(SQL,
-                employee.getName(),
-                employee.getCompany(),
-                employee.getEmail(),
-                employee.getId());
-        if(isUpdate){
+
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSession()) {
+
+            transaction = session.beginTransaction();
+
+            session.update(employee);
+
+            transaction.commit();
             return true;
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback(); // Rollback in case of error
+            e.printStackTrace();
+            return false;
         }
-        return false;
+        // Ensure the session is closed
+
 
     }
 
     @Override
     public ResultSet genarateIdms() {
-        String SQL = "SELECT id from employee order by id DESC LIMIT 1";
-        return util.execute(SQL);
+        String sql = "SELECT id from employee order by id DESC LIMIT 1";
+        return util.execute(sql);
     }
 
 
     @Override
     public ObservableList<EmployeeEntity> getAll() {
-        String SQL = "SELECT * FROM employee";
-        ResultSet resultSet = util.execute(SQL);
-        ObservableList<EmployeeEntity> employees = FXCollections.observableArrayList();
 
-        try {
-            while(resultSet.next()){
-                employees.add(
-                        new EmployeeEntity(
-                                resultSet.getString("id"),
-                                resultSet.getString("name"),
-                                resultSet.getString("company"),
-                                resultSet.getString("email")
-                        )
-                );
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSession()) {
+            ObservableList<EmployeeEntity> employees = FXCollections.observableArrayList();
+            transaction = session.beginTransaction();
+
+            // Use HQL to fetch all employee records
+            String hql = "FROM EmployeeEntity";
+            Query<EmployeeEntity> query = session.createQuery(hql, EmployeeEntity.class);
+
+            // Get list of employees and add them to the ObservableList
+            List<EmployeeEntity> resultList = query.getResultList();
+            employees.addAll(resultList);
+
+            transaction.commit();
+
+            // Return the list if it's not empty
+            if (!employees.isEmpty()) {
+                return employees;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
         }
-        if(!employees.isEmpty()){
-            return employees;
-        }
+
         return null;
+
 
     }
 
     @Override
     public Boolean deleteById(String id) {
-        String SQL = "DELETE FROM employee WHERE id=?";
-        Boolean isDelete = util.execute(SQL,id);
-        if(isDelete){
-            return true;
-        }
-        return false;
+        Session session = HibernateUtil.getSession();
+        Transaction transaction = null;
 
+        try {
+            transaction = session.beginTransaction();
+
+            // HQL query to delete the employee by ID
+            String hql = "DELETE FROM EmployeeEntity e WHERE e.id = :id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+
+            int result = query.executeUpdate();
+
+            transaction.commit();
+
+
+            return result > 0;
+
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+            return false;
+        } finally {
+            session.close();
+        }
+
+
+
+
+
+
+
+    }
+
+    @Override
+    public String genarateId() {
+        return null;
     }
 }

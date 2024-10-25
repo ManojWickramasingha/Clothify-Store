@@ -1,5 +1,6 @@
 package controller.order;
 
+import entity.OrderDetailEntity;
 import javafx.collections.ObservableList;
 import dto.OrderDetail;
 import util.CrudUtil;
@@ -36,4 +37,6 @@ public class OrderDetailController {
        }
         return false;
     }
+
+
 }

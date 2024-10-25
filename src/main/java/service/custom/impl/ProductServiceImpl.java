@@ -4,6 +4,7 @@ import dto.Category;
 import dto.OrderDetail;
 import dto.Product;
 import dto.Suppler;
+import entity.OrderDetailEntity;
 import entity.ProductEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ObservableList<String> getAllSupplerId() {
-      return   s_repository.idList();
+      return s_repository.idList();
 
     }
 
@@ -69,8 +70,5 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    @Override
-    public Boolean updateStoke(ObservableList<OrderDetail> orderDetailList) {
-        return null;
-    }
+
 }

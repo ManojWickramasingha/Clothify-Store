@@ -19,5 +19,5 @@ public interface ProductService extends SuperService {
 
     ObservableList<Integer> getAllCategoryId();
 
-    Boolean updateStoke(ObservableList<OrderDetail> orderDetailList);
+
 }

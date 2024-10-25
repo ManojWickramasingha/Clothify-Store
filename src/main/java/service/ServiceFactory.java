@@ -22,6 +22,7 @@ public class ServiceFactory {
             case LOGIN:return (T) new LoginServiceImpl();
             case USER:return (T) new UserServiceImpl();
             case REGISTER:return (T) new RegisterServiceImpl();
+            case ORDER:return (T) new OrderServiceImpl();
         }
         return null;
     }

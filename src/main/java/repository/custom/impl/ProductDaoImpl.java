@@ -1,10 +1,15 @@
 package repository.custom.impl;
 
+import dto.OrderDetail;
 import dto.Product;
+import entity.OrderDetailEntity;
 import entity.ProductEntity;
 import javafx.collections.ObservableList;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import repository.custom.ProductDao;
 import util.CrudUtil;
+import util.HibernateUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,20 +19,45 @@ public class ProductDaoImpl implements ProductDao {
     private CrudUtil util = CrudUtil.getInstance();
     @Override
     public Boolean save(ProductEntity product) {
-        String SQL = "INSERT INTO product values(?,?,?,?,?,?,?)";
-        Boolean isAdd = util.execute(SQL,
-                product.getId(),
-                product.getName(),
-                product.getSize(),
-                product.getPrice(),
-                product.getQty(),
-                product.getSupperId(),
-                product.getCategoryId());
+        Session session = null;
+        Transaction transaction = null;
+        boolean isAdded = false;
 
-        if(isAdd){
-            return  true;
+        try {
+            session = HibernateUtil.getSession();
+            transaction = session.beginTransaction();
+            session.persist(product);
+            transaction.commit();
+            isAdded = true;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
-        return false;
+
+        return isAdded;
+
+
+
+//        String SQL = "INSERT INTO product values(?,?,?,?,?,?,?)";
+//        Boolean isAdd = util.execute(SQL,
+//                product.getId(),
+//                product.getName(),
+//                product.getSize(),
+//                product.getPrice(),
+//                product.getQty(),
+//                product.getSupperId(),
+//                product.getCategoryId());
+//
+//        if(isAdd){
+//            return  true;
+//        }
+//        return false;
     }
 
     @Override
@@ -51,6 +81,25 @@ public class ProductDaoImpl implements ProductDao {
     public ResultSet genarateIdms() {
         return null;
     }
+
+    @Override
+    public Boolean updateStoke(ObservableList<OrderDetailEntity> orderDetailList) {
+        for(OrderDetailEntity obj : orderDetailList){
+            Boolean isUpdateStock =  updateStoke(obj);
+            if(!isUpdateStock){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private Boolean updateStoke(OrderDetailEntity orderDetail){
+        String SQL = "UPDATE product SET qty=qty-? WHERE id=?";
+        return util.execute(SQL,
+                orderDetail.getQty(),
+                orderDetail.getProductId());
+    }
+
 
     @Override
     public ObservableList<ProductEntity> getAll() {
